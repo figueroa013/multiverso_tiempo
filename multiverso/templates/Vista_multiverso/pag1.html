@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiverso</title>
+    <style>
+        .boton {
+            width: 100px;
+            height: 100px;
+            background-color: #03800b;
+            margin: 5px;
+            border-radius: 50%; /* Usa porcentaje para asegurar que sea redondo */
+            font-size: 11px;
+            line-height: 50px; /* Igual al height para centrar el texto verticalmente */
+            text-transform: uppercase;
+            float: left;
+            display: flex;  /* Para centrar el contenido */
+            align-items: center;  /* Para centrar el contenido verticalmente */
+            justify-content: center;  /* Para centrar el contenido horizontalmente */
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+        }
+        .boton:hover {
+            opacity: 0.5;
+        }
+        .boton a {
+            color: #fff;
+            text-decoration: none;
+            width: 100%; /* Para asegurarse de que el enlace ocupe todo el espacio del botón */
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nodos del Multiverso</h1>
+    <div id="nodos">
+        {% for nodo in nodos %}
+        <div class="boton"><a href="#">{{ 'nodo.nombre' }}</a></div>
+        <div><label for="#">{{ 'nodo.año' }}</label></div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+
+
