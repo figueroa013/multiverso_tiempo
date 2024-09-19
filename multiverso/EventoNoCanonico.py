@@ -1,10 +1,13 @@
 class EventoNoCanonico:
-    def __init__(self, año, nombre, caso1, caso2):
+    def __init__(self, id, año, nombre, muestra, descripcion):
+        self.id =id
         self.año = año
         self.nombre = nombre
-        self.caso1 = caso1
-        self.caso2 = caso2
+        self.muestra = muestra  # Ahora es un arreglo
+        self.descripcion = descripcion
 
     def __str__(self):
-        return f'{self.año} {self.nombre} ({self.caso1})'
+        # Podemos iterar sobre la muestra para mostrar todos los valores
+        muestra_str = ', '.join(map(str, self.muestra))
+        return f'{self.año} {self.nombre} ({muestra_str}) {self.descripcion}'
 

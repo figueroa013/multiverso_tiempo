@@ -1,34 +1,35 @@
 from django.shortcuts import render
-from .Nodo import Nodo
+from .models import EventoNoCanonico
 from .Grafo import Grafo
-from .EventoNoCanonico import EventoNoCanonico
 
 def Control(request):
-    # Crear instancias de EventoNoCanonico
-    evento1 = EventoNoCanonico(2020, "Evento A", "Descripción del caso 1", "Descripción del caso 2")
-    evento2 = EventoNoCanonico(2021, "Evento B", "Descripción del caso 3", "Descripción del caso 4")
-    evento3 = EventoNoCanonico(2022, "Evento C", "Descripción del caso 5", "Descripción del caso 6")
-    
     # Crear el grafo
     grafo = Grafo()
 
+    # Obtener todos los eventos no canónicos de la base de datos
+    eventos = EventoNoCanonico.objects.all()
+
+    # Crear un diccionario para almacenar los nodos
+    nodos = []
+
     # Agregar nodos al grafo
-    grafo.agregar_nodo(evento1)
-    grafo.agregar_nodo(evento2)
-    grafo.agregar_nodo(evento3)
+    for evento in eventos:
+        
+        nodo = {
+            'index': evento.id,  # O algún identificador único
+            'nombre': evento.nombre,
+            'año': evento.año
+        }
+        grafo.agregar_nodo(evento)
+        nodos.append(nodo)
 
-    # Conectar los nodos (crear aristas)
-    grafo.agregar_arista(evento1, evento2)
-    grafo.agregar_arista(evento2, evento3)
-    grafo.agregar_arista(evento3, evento1)  # Esto crea un ciclo
+    # Conectar los nodos para formar un ciclo
+    num_eventos = len(eventos)
+    for i in range(num_eventos):
+        grafo.agregar_arista(eventos[i], eventos[(i + 1) % num_eventos])
 
-    # Pasar nodos como texto al contexto
-    nodos = [
-        {evento1.nombre},
-        {evento2.nombre},
-        {evento3.nombre}
-    ]
-
+    # Pasar nodos al contexto
     return render(request, 'Vista_multiverso/pag1.html', {'nodos': nodos})
-     
-   
+
+    
+    

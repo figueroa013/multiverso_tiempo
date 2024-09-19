@@ -3,49 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multiverso</title>
+    <title>Vista Multiverso</title>
+    
     <style>
-        .boton {
-            width: 100px;
-            height: 100px;
-            background-color: #03800b;
-            margin: 5px;
-            border-radius: 50%; /* Usa porcentaje para asegurar que sea redondo */
-            font-size: 11px;
-            line-height: 50px; /* Igual al height para centrar el texto verticalmente */
-            text-transform: uppercase;
-            float: left;
-            display: flex;  /* Para centrar el contenido */
-            align-items: center;  /* Para centrar el contenido verticalmente */
-            justify-content: center;  /* Para centrar el contenido horizontalmente */
-            color: #fff;
-            text-decoration: none;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nodo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nodo-container img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .nodo-info {
             text-align: center;
         }
-        .boton:hover {
-            opacity: 0.5;
+
+        .nodo-info p {
+            margin: 5px 0;
         }
-        .boton a {
-            color: #fff;
+
+        .nodo-info strong {
+            font-weight: bold;
+        }
+
+        #next-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        #next-btn:hover {
+            background-color: #0056b3;
+        }
+
+        a#nodo-link {
+            display: block;
+            margin-top: 15px;
+            color: #007bff;
             text-decoration: none;
-            width: 100%; /* Para asegurarse de que el enlace ocupe todo el espacio del botón */
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        }
+
+        a#nodo-link:hover {
+            text-decoration: underline;
+        }
+
+        .nodo-info #nodo-ano {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Nodos del Multiverso</h1>
-    <div id="nodos">
+    <div class="container">
+        <h1>Nodo Actual</h1>
+        <div class="nodo-container" id="nodo-container">
+            <img id="nodo-imagen" src="https://via.placeholder.com/200" alt="Imagen del nodo">
+            <div class="nodo-info">
+                <p id="nodo-ano"></p>
+                <p><strong>Index:</strong> <span id="nodo-index"></span></p>
+                <p><strong>Nombre:</strong> <span id="nodo-nombre"></span></p>
+                <a id="nodo-link" href="#">Ver más</a>
+            </div>
+        </div>
+        <button id="next-btn">Siguiente</button>
+    </div>
+
+    <div id="nodos" style="display: none;">
         {% for nodo in nodos %}
-        <div class="boton"><a href="#">{{ 'nodo.nombre' }}</a></div>
-        <div><label for="#">{{ 'nodo.año' }}</label></div>
+        <div class="nodo" data-index="{{ nodo.index }}" data-nombre="{{ nodo.nombre }}" data-ano="{{ nodo.año }}" data-imagen="{{ nodo.imagen }}"></div>
         {% endfor %}
     </div>
+
+    <script>
+        const nodos = document.querySelectorAll('.nodo');
+        let currentIndex = 0;
+
+        function mostrarNodo(index) {
+            const nodo = nodos[index];
+            document.getElementById('nodo-index').textContent = nodo.getAttribute('data-index');
+            document.getElementById('nodo-nombre').textContent = nodo.getAttribute('data-nombre');
+            document.getElementById('nodo-ano').textContent = nodo.getAttribute('data-ano');
+            document.getElementById('nodo-imagen').src = nodo.getAttribute('data-imagen') || '../../static/multiverso/images/nodo_icon.png';
+            // Actualiza el enlace con el índice del nodo actual
+            const link = document.getElementById('nodo-link');
+            link.href = `{% url 'pag2' '0' %}`.replace('0', nodo.getAttribute('data-index'));
+            link.textContent = `Ver más sobre ${nodo.getAttribute('data-nombre')}`;
+        }
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % nodos.length;
+            mostrarNodo(currentIndex);
+        });
+
+        // Mostrar el primer nodo al cargar la página
+        mostrarNodo(currentIndex);
+    </script>
 </body>
 </html>
-
-
-
