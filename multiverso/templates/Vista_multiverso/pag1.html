@@ -7,16 +7,18 @@
     
     <style>
         body {
+            cursor: url('../../static/multiverso/images/cursor.png'), auto;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f0f0;
+            background-image: url('../../static/multiverso/images/fondo1.webp');
             margin: 0;
         }
 
         .container {
+            cursor: url('../../static/multiverso/images/cursor.png'), auto;
             text-align: center;
             background-color: #fff;
             padding: 20px;
@@ -87,13 +89,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Nodo Actual</h1>
+        <h1> <span id="nodo-nombre"></h1>
         <div class="nodo-container" id="nodo-container">
             <img id="nodo-imagen" src="https://via.placeholder.com/200" alt="Imagen del nodo">
             <div class="nodo-info">
-                <p id="nodo-ano"></p>
-                <p><strong>Index:</strong> <span id="nodo-index"></span></p>
-                <p><strong>Nombre:</strong> <span id="nodo-nombre"></span></p>
+                <p> <strong> Año </strong> <span id="nodo-ano"></span></p>
+                <p><strong>Universo #</strong> <span id="nodo-index"></span></p>
                 <a id="nodo-link" href="#">Ver más</a>
             </div>
         </div>
@@ -115,7 +116,7 @@
             document.getElementById('nodo-index').textContent = nodo.getAttribute('data-index');
             document.getElementById('nodo-nombre').textContent = nodo.getAttribute('data-nombre');
             document.getElementById('nodo-ano').textContent = nodo.getAttribute('data-ano');
-            document.getElementById('nodo-imagen').src = nodo.getAttribute('data-imagen') || '../../static/multiverso/images/nodo_icon.png';
+            document.getElementById('nodo-imagen').src = nodo.getAttribute('data-imagen') || '../../static/multiverso/images/portal.webp';
             // Actualiza el enlace con el índice del nodo actual
             const link = document.getElementById('nodo-link');
             link.href = `{% url 'pag2' '0' %}`.replace('0', nodo.getAttribute('data-index'));

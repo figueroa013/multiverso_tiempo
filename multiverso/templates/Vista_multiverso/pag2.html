@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f0f0;
+            background-image: url('../../static/multiverso/images/fondo1.webp');
             margin: 0;
         }
         .container {
@@ -54,8 +54,8 @@
     <div class="container">
         <h1>{{ evento.nombre }} ({{ evento.año }})</h1>
         {% load static %}
-        <img src="{% static 'multiverso/images/' %}{{ evento.id }}_1.jpg" alt="Imagen 1">
-        <img src="{% static 'multiverso/images/' %}{{ evento.id }}_2.jpg" alt="Imagen 2">
+        <img src="{{evento.imagen1}}" alt="Imagen 1">
+        <img src="{{evento.imagen2}}" alt="Imagen 2">
 
         <p><strong>Descripción:</strong> {{ evento.descripcion }}</p>
 

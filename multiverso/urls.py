@@ -6,4 +6,6 @@ urlpatterns = [
     path('multiverso/', views.multi, name="multiverso"),
     path('pag2/<int:id>/', views.pag2, name='pag2'),  # Recibe el índice del nodo
     path('imprimir-indice/', views.imprimir_indice, name='imprimir_indice'),
+    path('grafo/', views.grafo, name='grafo'),
+
 ]

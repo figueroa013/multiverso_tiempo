@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .Control import Control
+from .Control2 import Control2
+
 from .models import EventoNoCanonico
 # Create your views here.
 def index(request):
@@ -8,6 +10,9 @@ def index(request):
 
 def multi(request):
     return Control(request)
+
+def grafo(request):
+    return Control2(request)
 
 def imprimir_indice(request):
     current_index = request.POST.get('current_index')

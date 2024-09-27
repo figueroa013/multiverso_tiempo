@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualización del Grafo</title>
+    <!-- Incluir la biblioteca vis.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url('../../static/multiverso/images/fondo1.webp'); /* Ruta de tu imagen */
+            background-size: cover;
+            background-position: center;
+        }
+
+        #mynetwork {
+            width: 100%;
+            height: 600px;
+            border: 1px solid lightgray;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para el grafo */
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Sombra para hacer que el texto sea más visible */
+        }
+    </style>
+</head>
+<body>
+    <h1>Visualización del Grafo</h1>
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+        // Obtener nodos y aristas del contexto Django
+        var nodes = new vis.DataSet({{ nodos|safe }});
+        var edges = new vis.DataSet({{ aristas|safe }});
+
+        // Crear el contenedor para la red
+        var container = document.getElementById('mynetwork');
+
+        // Proporcionar los datos al grafo
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+
+        // Opciones para personalizar la visualización
+        var options = {
+            nodes: {
+                shape: 'dot',
+                size: 16,
+                font: {
+                    size: 14
+                }
+            },
+            edges: {
+                arrows: {
+                    to: {enabled: true, scaleFactor: 1}
+                },
+                smooth: {
+                    type: 'continuous'
+                }
+            },
+            physics: {
+                stabilization: false
+            },
+            interaction: {
+                hover: true
+            }
+        };
+
+        // Inicializar y dibujar la red
+        var network = new vis.Network(container, data, options);
+    </script>
+</body>
+</html>
